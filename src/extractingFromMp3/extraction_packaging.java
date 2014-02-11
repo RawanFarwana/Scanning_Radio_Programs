@@ -19,8 +19,8 @@ public class extraction_packaging {
 	public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException {
 		try {
 			 
-			File file = new File("/Users/rawanfarwana/Documents/workspace/Test/bin/extractingFromMp3/test.wav");
-			
+			File file = new File("res/test.wav");
+			System.out.println("Started");
 			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
 			AudioFormat format = audioInputStream.getFormat();
 		
@@ -29,9 +29,9 @@ public class extraction_packaging {
 			double timeInMinutes = durationInSeconds / 60;
 			int timeInMinutesForLoop = (int)(timeInMinutes + 1); 
 					
-			String path = "/Users/rawanfarwana/Documents/workspace/Test/bin/extractingFromMp3/sox-14.4.1/sox";
-			String pathOfOriginalFile = "/Users/rawanfarwana/Documents/workspace/Test/bin/extractingFromMp3/test.wav";
-			String pathOfNewFile = "/Users/rawanfarwana/Documents/workspace/Test/bin/extractingFromMp3/Extracted_Files/test";
+			String path = "res/sox-14.4.1/sox";
+			String pathOfOriginalFile = "res/test.wav";
+			String pathOfNewFile = "res/Extracted_Files/test";
 
 			String action = "trim";  
 			int startTime = 0; 
@@ -46,8 +46,6 @@ public class extraction_packaging {
 				ProcessBuilder pb = new ProcessBuilder(path, pathOfOriginalFile, newPath , action , startTime+ "", "5");
 
 				paths.add(newPath);
-				
-				pb.directory(new File("bin/"));
 				
 				Process p = pb.start();
 				
@@ -71,8 +69,9 @@ public class extraction_packaging {
 			            clip1.getFrameLength() + clip2.getFrameLength());
 			    clip1 = appendedFiles;
 			}
-			AudioSystem.write(clip1, AudioFileFormat.Type.WAVE, new File("/Users/rawanfarwana/Documents/workspace/Test/bin/extractingFromMp3/exported.wav"));
-		
+			String nameOfFile = "exported_" + (paths.size() - 1);
+			AudioSystem.write(clip1, AudioFileFormat.Type.WAVE, new File("res/" + nameOfFile + ".wav"));
+			System.out.println("Done");
 		} catch (IOException e)
 		{
 			System.out.println("I've caught an exception");
